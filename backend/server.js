@@ -1,16 +1,20 @@
 const express = require ("express")
+const goals = require ("./routes/goalRoutes")
+const {errorHandler} = require('./middlewares/errorMiddleware')
 const port = process.env.PORT || 5000
 
-const server = express()
+const app = express()
 
-server.listen(port, () => {
+app.use(express.json())
+app.use(express.urlencoded({extended : false}))
+app.use('/api/goals', goals)
+app.use(errorHandler)
+
+
+app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
 
-server.get ('/', (req, res, next) => {
-    res.send("Hello people my name is Charles Uthulor")
-})
 
-server.get ("/hello", (req, res, next) => {
-    res.send("This is the page for hello")
-})
+
+module.exports = app;
