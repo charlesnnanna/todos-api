@@ -1,4 +1,5 @@
 const express = require ("express")
+const dotenv = require ("dotenv")
 const goals = require ("./routes/goalRoutes")
 const {errorHandler} = require('./middlewares/errorMiddleware')
 const connectDB = require("./config/db")
@@ -13,9 +14,12 @@ app.use('/api/goals', goals)
 app.use(errorHandler)
 
 
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
-})
+if (process.env.NODE_ENV !== 'test'){
+    app.listen(port, () => {
+        // console.log(`Server listening on port ${port}`)
+     }) 
+}
+
 
 
 
